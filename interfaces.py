@@ -1,8 +1,9 @@
-from main import connect
+import paramiko
+import time
+import getpass
 
 
-
-def inte():
+def interface():
     connection.send("conf t\n")
     time.sleep(.5)
     connection.send("int g0/1\n")

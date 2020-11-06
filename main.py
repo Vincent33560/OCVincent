@@ -1,14 +1,14 @@
 import paramiko
 import time
 import getpass
+from interfaces import interface
 
-ip = input("Entrez l'ip cible :")
-username = input("Entrez hostname :")
-password = input("Entrez le mot de passe :")
+def connect():
+    ip = input("Entrez l'ip cible :")
+    username = input("Entrez hostname :")
+    password = input("Entrez le mot de passe :")
 
-def connect(self):
     try:
-
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -36,6 +36,8 @@ def connect(self):
             time.sleep(.5)
 
 
+            interface()
+
 
         except paramiko.AuthenticationException:
             print("Mot de passe incorrect " + password)
@@ -47,14 +49,4 @@ def connect(self):
         print("Quelque chose ne va pas")
 
 
-def interface():
-    connection.send("conf t\n")
-    time.sleep(.5)
-    connection.send("int g0/1\n")
-    time.sleep(2)
-    connection.send("ip address 192.168.10.1 255.255.255.0\n")
-    time.sleep(2)
-    connection.send("no shut\n")
-    connection.send("end\n")
-    print("ca fonctionne")
-    time.sleep(2)
+connect()
