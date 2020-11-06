@@ -1,6 +1,8 @@
 import paramiko
 import time
 import getpass
+from interfaces import interface
+
 
 def connect():
     ip = input("Entrez l'ip cible :")

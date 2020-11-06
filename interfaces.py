@@ -1,7 +1,7 @@
 import paramiko
 import time
 import getpass
-
+from test import connect
 
 def interface():
     connection.send("conf t\n")
