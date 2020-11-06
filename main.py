@@ -1,16 +1,24 @@
-# This is a sample Python script.
+import getpass
+import telnetlib
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+HOST = "10.0.0.1"
+user = input("Entre votre hostname: ")
+password = getpass.getpass()
 
+tn = telnetlib.Telnet(HOST)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+tn.read_until(b"Hostname : ")
+tn.write(user.encode('ascii') +b"\n")
+if password:
+    tn.read_until(b"Password: ")
+    tn.write(password.encode('ascii') + b"\n")
 
+tn.write(b"enable\n")
+tn.write(b"cisco\n")
+tn.write(b"conf t\n")
+tn.write(b"int g0/1\n")
+tn.write(b"192.168.100.1 255.255.255.0\n")
+tn.write(b"no shut\n")
+tn.write(b"end\n")
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(tn.read_all().decode('ascii'))
