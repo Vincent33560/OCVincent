@@ -19,9 +19,9 @@ try:
                 password=password,
                 look_for_keys=False,
                 allow_agent=False)
-        print("Connection réussie !")
+        print("Connexion réussie !")
 
-        connection = ssh.invoke_session()
+        connection = ssh.invoke_shell()
         connection.send("enable\n")
         time.sleep(.5)
         connection.send("vdcvdc\n")
@@ -29,16 +29,17 @@ try:
         connection.send("show ip int brief\n")
         time.sleep(2)
 
-        router_output = connection.recv(65535)
+        router_output = connection.recv(65535).decode(encoding='utf-8')
+
         time.sleep(.5)
         print("\n\n")
         print(str(router_output) + "\n")
         time.sleep(.5)
 
-        connection.send("end\n")
+       
 
     except paramiko.AuthenticationException:
-        print("Mot de passe incorrect" + password)
+        print("Mot de passe incorrect " + password)
 
     except socket.erro:
         print("Erreur de socket")
