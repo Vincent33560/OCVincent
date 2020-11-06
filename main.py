@@ -16,7 +16,7 @@ if password:
 tn.write(b"enable\n")
 tn.write(b"cisco\n")
 tn.write(b"conf t\n")
-tn.write(b"int g0/1\n")
+tn.write(b"int f0/1\n")
 tn.write(b"192.168.100.1 255.255.255.0\n")
 tn.write(b"no shut\n")
 tn.write(b"end\n")
