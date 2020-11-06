@@ -1,24 +1,23 @@
+import paramiko
+import time
 import getpass
-import telnetlib
 
-HOST = "192.168.100.200"
-user = input("Entre votre hostname: ")
-password = getpass.getpass()
+ip = input("Entrez l'ip cible :")
+username = input("Entrez hostname :")
+password = input("Entrez le mot de passe :")
 
-tn = telnetlib.Telnet(HOST)
+SESSION = paramiko.SSHClient()
+SESSION.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+SESSION.connect(ip,port=22,
+                username=username,
+                password=password,
+                look_for_keys=False,
+                allow_agent=False)
 
-tn.read_until(b"Hostname : ")
-tn.write(user.encode('ascii') +b"\n")
-if password:
-    tn.read_until(b"Password: ")
-    tn.write(password.encode('ascii') + b"\n")
+DEVICE_ACCESS = SESSION.invoke_shell()
+DEVICE_ACCESS.send(b'sh run\n')
+time.sleep(2)
+output = DEVICE_ACCESS.recv(65000)
+print(output.decode('ascii'))
 
-tn.write(b"enable\n")
-tn.write(b"cisco\n")
-tn.write(b"conf t\n")
-tn.write(b"int f0/1\n")
-tn.write(b"192.168.100.1 255.255.255.0\n")
-tn.write(b"no shut\n")
-tn.write(b"end\n")
-
-print(tn.read_all().decode('ascii'))
+SESSION.close
