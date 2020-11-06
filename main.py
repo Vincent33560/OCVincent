@@ -1,7 +1,7 @@
 import getpass
 import telnetlib
 
-HOST = "10.0.0.1"
+HOST = "192.168.100.200"
 user = input("Entre votre hostname: ")
 password = getpass.getpass()
 
