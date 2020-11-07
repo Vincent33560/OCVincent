@@ -1,53 +1,52 @@
 import paramiko
 import time
-import getpass
-from interfaces import interface
+from getpass import getpass
 
-#ip = input("Entrez l'ip cible :")
-#username = input("Entrez hostname :")
-#password = input("Entrez le mot de passe :")
+router_ip = "192.168.100.150"
+router_username = "vincent"
+router_password = "admin"
 
-router_ip = "172.16.1.100"
-router_username = "admin"
-router_password = "admin1"
 
 class a:
-    def test(ip_address, username, password):
+
+    def run_command_on_device(ip_address, username, password):
+        """ Connect to a device, run a command, and return the output."""
 
         ssh = paramiko.SSHClient()
+        # Add SSH host key when missing.
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-        ssh.connect(ip, port=22,
-                    name=username,
-                    mdp=password,
-                    look_for_keys=False,
-                    allow_agent=False)
-        print("Connexion réussie !")
-
-    def connect(self):
+        # Load SSH host keys.
+        ssh.load_system_host_keys()
 
 
-        connection = ssh.invoke_shell()
-        connection.send("enable\n")
-        time.sleep(.5)
-        connection.send("vdcvdc\n")
-        time.sleep(2)
-        connection.send("show ip int brief\n")
-        time.sleep(2)
+        total_attempts = 3
+        for attempt in range(total_attempts):
+            try:
+                print("Attempt to connect: %s" % attempt)
+                # Connect to router using username/password authentication.
+                ssh.connect(router_ip,
+                            username=router_username,
+                            password=router_password,
+                            look_for_keys=False)
+                # Run command.
+                DEVICE_ACCESS = ssh.invoke_shell()
+                DEVICE_ACCESS.send(b"conf t\n")
+                DEVICE_ACCESS.send(b"int g0/1\n")
+                DEVICE_ACCESS.send(b"ip address 192.168.53.121\n")
+                time.sleep(2)
+                # Read output from command.
+                output = DEVICE_ACCESS.recv(65000)
+                print(output.decode('ascii'))
+                # Close connection.
+                ssh.close()
+            
+            except Exception as error_message:
+                print("Unable to connect")
+                print(error_message)
 
-        router_output = connection.recv(65535).decode(encoding='utf-8')
-
-        time.sleep(.5)
-        print("\n\n")
-        print(str(router_output) + "\n")
-        time.sleep(.5)
-
-
-        interface()
+    fin_lancement = run_command_on_device(router_ip, router_username, router_password)
 
 
 
 
 
-sortie = test(router_ip, router_username, router_password)
-inte = interface()
