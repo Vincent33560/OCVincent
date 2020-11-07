@@ -37,5 +37,5 @@ class a:
                 print("Unable to connect")
                 print(error_message)
 
-
+a()
 print("C'est fait")
