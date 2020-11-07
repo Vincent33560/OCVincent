@@ -30,21 +30,24 @@ class a:
                             look_for_keys=False)
                 # Run command.
                 DEVICE_ACCESS = ssh.invoke_shell()
+                DEVICE_ACCESS.send(b"enable\n")
+                DEVICE_ACCESS.send(b"vdcvdc\n")
                 DEVICE_ACCESS.send(b"conf t\n")
                 DEVICE_ACCESS.send(b"int g0/1\n")
-                DEVICE_ACCESS.send(b"ip address 192.168.53.121\n")
+                DEVICE_ACCESS.send(b"ip address 192.168.53.121 255.255.255.0\n")
                 time.sleep(2)
                 # Read output from command.
                 output = DEVICE_ACCESS.recv(65000)
                 print(output.decode('ascii'))
                 # Close connection.
                 ssh.close()
-            
+                print("c'est fait!")
+
             except Exception as error_message:
                 print("Unable to connect")
                 print(error_message)
 
-    fin_lancement = run_command_on_device(router_ip, router_username, router_password)
+    lancement_fin = run_command_on_device(router_ip, router_username, router_password)
 
 
 
