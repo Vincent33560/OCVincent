@@ -6,10 +6,9 @@ router_ip = "192.168.100.150"
 router_username = "vincent"
 router_password = "admin"
 
-
 class a:
 
-    def run_command_on_device(ip_address, username, password):
+    def run_command_on_device(username, password):
         """ Connect to a device, run a command, and return the output."""
 
         ssh = paramiko.SSHClient()
@@ -17,7 +16,6 @@ class a:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         # Load SSH host keys.
         ssh.load_system_host_keys()
-
 
         total_attempts = 3
         for attempt in range(total_attempts):
@@ -39,12 +37,12 @@ class a:
                 print(output.decode('ascii'))
                 # Close connection.
                 ssh.close()
-            
+
             except Exception as error_message:
                 print("Unable to connect")
                 print(error_message)
 
-    fin_lancement = run_command_on_device(router_ip, router_username, router_password)
+    run_command_on_device(router_ip, router_username, router_password)
 
 
 

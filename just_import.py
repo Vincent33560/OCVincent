@@ -1,4 +1,4 @@
 from test2 import *
 
-fin_lancement()
+a()
 print("ca fonctionne")
