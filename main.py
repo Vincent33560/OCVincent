@@ -3,10 +3,12 @@ import time
 import getpass
 from interfaces import interface
 
-def connect():
-    ip = input("Entrez l'ip cible :")
-    username = input("Entrez hostname :")
-    password = input("Entrez le mot de passe :")
+ip = input("Entrez l'ip cible :")
+username = input("Entrez hostname :")
+password = input("Entrez le mot de passe :")
+
+def connect(ip_address, name, mdp):
+
 
     try:
         ssh = paramiko.SSHClient()
@@ -14,8 +16,8 @@ def connect():
 
         try:
             ssh.connect(ip,port=22,
-                    username=username,
-                    password=password,
+                    name=username,
+                    mdp=password,
                     look_for_keys=False,
                     allow_agent=False)
             print("Connexion réussie !")
@@ -49,4 +51,5 @@ def connect():
         print("Quelque chose ne va pas")
 
 
-connect()
+sortie = connect(ip, username, password)
+inte = interface()
