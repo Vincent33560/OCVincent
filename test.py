@@ -9,7 +9,7 @@ router_password = "admin"
 
 class a:
 
-    def run_command_on_device(ip_address, username, password):
+    def run_command_on_device(router_ip, username, password):
         """ Connect to a device, run a command, and return the output."""
 
         ssh = paramiko.SSHClient()
