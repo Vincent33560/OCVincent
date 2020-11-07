@@ -37,5 +37,10 @@ class a:
                 print("Unable to connect")
                 print(error_message)
 
-a()
+    fin_lancement = run_command_on_device(router_ip, router_username, router_password, "sh ip int br")
+
+
+fin_lancement()
+
+
 print("C'est fait")
