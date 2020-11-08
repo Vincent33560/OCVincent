@@ -1,4 +1,4 @@
-from test import run_command_on_device as SSH
+#from test import run_command_on_device as SSH
 from test import start_connect
 
 

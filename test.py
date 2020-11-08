@@ -28,14 +28,13 @@ def run_command_on_device(router_ip, username, password):
             DEVICE_ACCESS.send(b"en\n")
             DEVICE_ACCESS.send(b"vdcvdc\n")
             DEVICE_ACCESS.send(b"conf t\n")
-            DEVICE_ACCESS.send(b"int g0/1\n")
-            DEVICE_ACCESS.send(b"ip address 192.168.0.10 255.255.255.0\n")
+            DEVICE_ACCESS.send(b"int g0/2\n")
+            DEVICE_ACCESS.send(b"ip address 192.168..120 255.255.255.0\n")
             DEVICE_ACCESS.send(b"no shut\n")
             DEVICE_ACCESS.send(b"end\n")
             DEVICE_ACCESS.send(b"sh ip int br\n")
 
-            time.sleep(2)
-            print("test2")
+            time.sleep(1)
 
             # Read output from command.
             output = DEVICE_ACCESS.recv(65000)
@@ -45,8 +44,6 @@ def run_command_on_device(router_ip, username, password):
 
         except paramiko.AuthenticationException:
             print("Incorrect password: ")
-
-
     except:
         print("Quelque chose ne vas pas")
 
