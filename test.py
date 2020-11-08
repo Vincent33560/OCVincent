@@ -32,7 +32,11 @@ class a:
                 DEVICE_ACCESS.send(b"vdcvdc\n")
                 DEVICE_ACCESS.send(b"conf t\n")
                 DEVICE_ACCESS.send(b"int g0/1\n")
-                DEVICE_ACCESS.send(b"ip address 192.168.53.121\n")
+                DEVICE_ACCESS.send(b"ip address 192.168.0.10 255.255.255.0\n")
+                DEVICE_ACCESS.send(b"no shut\n")
+                DEVICE_ACCESS.send(b"end\n")
+                DEVICE_ACCESS.send(b"sh ip int br\n")
+
                 time.sleep(2)
                 print("test2")
 
