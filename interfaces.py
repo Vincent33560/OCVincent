@@ -1,3 +1,5 @@
+from main import run_command_on_device
+
 
 def Interfaces():
     DEVICE_ACCESS.send(b"en\n")
@@ -9,5 +11,8 @@ def Interfaces():
     DEVICE_ACCESS.send(b"end\n")
     DEVICE_ACCESS.send(b"sh ip int br\n")
     time.sleep(1)
+
+config_interface = Interfaces()
+
 
 
