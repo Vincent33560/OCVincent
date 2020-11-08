@@ -28,6 +28,8 @@ class a:
                             look_for_keys=False)
                 # Run command.
                 DEVICE_ACCESS = ssh.invoke_shell()
+                DEVICE_ACCESS.send(b"en\n")
+                DEVICE_ACCESS.send(b"vdcvdc\n")
                 DEVICE_ACCESS.send(b"conf t\n")
                 DEVICE_ACCESS.send(b"int g0/1\n")
                 DEVICE_ACCESS.send(b"ip address 192.168.53.121\n")
