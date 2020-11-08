@@ -1,55 +1,45 @@
 import paramiko
 import time
-import getpass
-from interfaces import interface
+from getpass import getpass
+from interfaces import Interfaces
 
-ip = input("Entrez l'ip cible :")
-username = input("Entrez hostname :")
-password = input("Entrez le mot de passe :")
+router_ip = input("Entrez l'adresse IP cible : ")
+router_username = input("Entrez le username : ")
+router_password = input("Entrez le mot de passe : ")
 
-def connect(ip_address, name, mdp):
-
-
+def run_command_on_device(router_ip, username, password):
+    """ Connect to a device, run a command, and return the output."""
     try:
         ssh = paramiko.SSHClient()
+        # Add SSH host key when missing.
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        # Load SSH host keys.
+        ssh.load_system_host_keys()
 
         try:
-            ssh.connect(ip,port=22,
-                    name=username,
-                    mdp=password,
-                    look_for_keys=False,
-                    allow_agent=False)
-            print("Connexion réussie !")
+            # Connect to router using username/password authentication.
+            ssh.connect(router_ip,
+                        username=router_username,
+                        password=router_password,
+                        look_for_keys=False)
+            print("Connexion réussie")
 
-            connection = ssh.invoke_shell()
-            connection.send("enable\n")
-            time.sleep(.5)
-            connection.send("vdcvdc\n")
-            time.sleep(2)
-            connection.send("show ip int brief\n")
-            time.sleep(2)
+            # Run command.
+            DEVICE_ACCESS = ssh.invoke_shell()
 
-            router_output = connection.recv(65535).decode(encoding='utf-8')
+            Interfaces()
 
-            time.sleep(.5)
-            print("\n\n")
-            print(str(router_output) + "\n")
-            time.sleep(.5)
-
-
-            interface()
-
+            # Read output from command.
+            output = DEVICE_ACCESS.recv(65000)
+            print(output.decode('ascii'))
+            # Close connection.
+            ssh.close()
 
         except paramiko.AuthenticationException:
-            print("Mot de passe incorrect " + password)
-
-        except socket.erro:
-            print("Erreur de socket")
-
+            print("Incorrect password: ")
     except:
-        print("Quelque chose ne va pas")
+        print("Quelque chose ne vas pas")
 
 
-sortie = connect(ip, username, password)
-inte = interface()
+# run_command_on_device(router_ip, router_username, router_password)
+start_connect = run_command_on_device(router_ip, router_username, router_password)

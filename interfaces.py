@@ -1,18 +1,13 @@
-import paramiko
-import time
-import getpass
-from test2 import *
-ssh = paramiko.SSHClient()
 
-def interface(self):
-    connection.send("conf t\n")
-    time.sleep(.5)
-    connection.send("int g0/1\n")
-    time.sleep(2)
-    connection.send("ip address 192.168.10.1 255.255.255.0\n")
-    time.sleep(2)
-    connection.send("no shut\n")
-    connection.send("end\n")
-    print("ca fonctionne")
-    time.sleep(2)
+def Interfaces():
+    DEVICE_ACCESS.send(b"en\n")
+    DEVICE_ACCESS.send(b"vdcvdc\n")
+    DEVICE_ACCESS.send(b"conf t\n")
+    DEVICE_ACCESS.send(b"int g0/2\n")
+    DEVICE_ACCESS.send(b"ip address 192.168.42.25 255.255.255.0\n")
+    DEVICE_ACCESS.send(b"no shut\n")
+    DEVICE_ACCESS.send(b"end\n")
+    DEVICE_ACCESS.send(b"sh ip int br\n")
+    time.sleep(1)
+
 
