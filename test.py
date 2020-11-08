@@ -2,12 +2,12 @@ import paramiko
 import time
 from getpass import getpass
 
-router_ip = "192.168.100.150"
-router_username = "vincent"
-router_password = "admin"
+router_ip = input("Entrez l'adresse IP cible : ")
+router_username = input("Entrez le username : ")
+router_password = input("Entrez le mot de passe : ")
 
-class a:
-    print("test")
+class Connect_ssh:
+
     def run_command_on_device(router_ip, username, password):
         """ Connect to a device, run a command, and return the output."""
 
