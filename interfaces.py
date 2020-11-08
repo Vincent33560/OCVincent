@@ -1,7 +1,12 @@
-from main import run_command_on_device
-
+import paramiko
 
 def Interfaces():
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.load_system_host_keys()
+
+
+    DEVICE_ACCESS = ssh.invoke_shell()
     DEVICE_ACCESS.send(b"en\n")
     DEVICE_ACCESS.send(b"vdcvdc\n")
     DEVICE_ACCESS.send(b"conf t\n")
