@@ -7,8 +7,8 @@ router_username = "vincent"
 router_password = "admin"
 
 class a:
-
-    def run_command_on_device(username, password):
+    print("test")
+    def run_command_on_device(router_ip, username, password):
         """ Connect to a device, run a command, and return the output."""
 
         ssh = paramiko.SSHClient()
@@ -32,6 +32,8 @@ class a:
                 DEVICE_ACCESS.send(b"int g0/1\n")
                 DEVICE_ACCESS.send(b"ip address 192.168.53.121\n")
                 time.sleep(2)
+                print("test2")
+
                 # Read output from command.
                 output = DEVICE_ACCESS.recv(65000)
                 print(output.decode('ascii'))

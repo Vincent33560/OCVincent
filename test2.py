@@ -31,8 +31,7 @@ class a:
                 output = ssh_stdout.readlines()
                 # Close connection.
                 ssh.close()
-                return output
-
+                print("C'est fait")
             except Exception as error_message:
                 print("Unable to connect")
                 print(error_message)
@@ -40,7 +39,6 @@ class a:
     fin_lancement = run_command_on_device(router_ip, router_username, router_password, "sh ip int br")
 
 
-fin_lancement()
 
 
-print("C'est fait")
+
