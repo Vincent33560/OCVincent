@@ -1,9 +1,6 @@
-import paramiko
-
+from main import *
 def Interfaces():
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.load_system_host_keys()
+
 
 
     DEVICE_ACCESS = ssh.invoke_shell()

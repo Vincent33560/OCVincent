@@ -1,7 +1,6 @@
 import paramiko
 import time
 from getpass import getpass
-from interfaces import config_interface
 
 router_ip = input("Entrez l'adresse IP cible : ")
 router_username = input("Entrez le username : ")
@@ -27,13 +26,12 @@ def run_command_on_device(router_ip, username, password):
             # Run command.
             DEVICE_ACCESS = ssh.invoke_shell()
 
-            config_interface
+
 
             # Read output from command.
             output = DEVICE_ACCESS.recv(65000)
             print(output.decode('ascii'))
-            # Close connection.
-            ssh.close()
+
 
         except paramiko.AuthenticationException:
             print("Incorrect password: ")
