@@ -1,6 +1,7 @@
 from main import router_username, router_password, router_ip
 import paramiko
-import time
+import  time
+
 
 def Interfaces():
     ssh = paramiko.SSHClient()
@@ -24,6 +25,10 @@ def Interfaces():
     DEVICE_ACCESS.send(b"end\n")
     DEVICE_ACCESS.send(b"sh ip int br\n")
     time.sleep(1)
+
+    # Read output from command.
+    output = DEVICE_ACCESS.recv(65000)
+    print(output.decode('ascii'))
 
 config_interface = Interfaces()
 
