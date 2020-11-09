@@ -1,7 +1,10 @@
-from main import router_username, router_password, router_ip
+#from main import router_username, router_password, router_ip
 import paramiko
-import  time
+import time
 
+router_ip = input("Entrez l'adresse IP cible : ")
+router_username = input("Entrez le username : ")
+router_password = input("Entrez le mot de passe : ")
 
 def Interfaces():
     ssh = paramiko.SSHClient()
@@ -31,7 +34,11 @@ def Interfaces():
     print(output.decode('ascii'))
 
 
-config_interface = Interfaces()
-
-
-
+reponse = input("Voulez vous continuer ?[o/n]")
+reponse = reponse.strip().lower()
+if reponse.startswith('o'):
+    int = Interfaces()
+elif reponse.startswith('n') or reponse == '':
+    print("au revoir")
+else:
+    print("repondez !")
