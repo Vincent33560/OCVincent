@@ -1,8 +1,8 @@
-from interfaces import Interfaces
+from interfaces import config_interface
 
 question = input("Voulez vous lancer le truc ?")
 
 if question == 0:
-    lancement = Interfaces()
+    lancement = config_interface()
 else:
     print("ok")

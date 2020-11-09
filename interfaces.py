@@ -30,7 +30,7 @@ def Interfaces():
     output = DEVICE_ACCESS.recv(65000)
     print(output.decode('ascii'))
 
-#config_interface = Interfaces()
+config_interface = Interfaces()
 
 
 
