@@ -3,7 +3,6 @@ import time
 import os
 import csv
 
-from pip._vendor.distlib.compat import raw_input
 
 
 def sendRec(ssh, command):
@@ -23,7 +22,6 @@ def sendRec(ssh, command):
 
 
 def main():
-    global username, password
     longstring = """\
     \n
             /,,
@@ -59,12 +57,12 @@ def main():
     longstring
 
     # Prompt user for pre-configured IP address and ssh credentials
-    ip = raw_input("Enter IP address of device (q to quit): ")
+    ip = input("Enter IP address of device (q to quit): ")
     if ip == "q":
         exit()
     else:
-        username = raw_input("username: ")
-        password = raw_input("password: ")
+        username = input("username: ")
+        password = input("password: ")
 
     # Create instance of SSHClient object
     ssh_pre = paramiko.SSHClient()
@@ -121,7 +119,7 @@ def devMain(ssh):
                 3 - test connectivity \n
                 4 - save/load \n
                 0 - logout \n"""
-            menu_choice = int(raw_input())
+            menu_choice = int(input())
         except ValueError:
             print
             "Choose a number from 1 to 4"
@@ -149,7 +147,7 @@ def show(ssh):
                 7 - show license \n
                 8 - show vlans \n
                 0 - back \n"""
-            menu_choice = int(raw_input())
+            menu_choice = int(input())
         except ValueError:
             print
             "Choose a number from 1 to 8"
