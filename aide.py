@@ -52,29 +52,28 @@ def main():
     """
 
     # Clear screen and print welcome to screen
-    os.system("clear")
+    #os.system("clear")
     print
     longstring
 
+    router_ip = input("Entrez l'adresse IP cible : ")
+    router_username = input("Entrez le username : ")
+    router_password = input("Entrez le mot de passe : ")
+
     # Prompt user for pre-configured IP address and ssh credentials
-    ip = input("Enter IP address of device (q to quit): ")
-    if ip == "q":
-        exit()
-    else:
-        username = input("username: ")
-        password = input("password: ")
-
-    # Create instance of SSHClient object
     ssh_pre = paramiko.SSHClient()
+    # Add SSH host key when missing.
+    ssh_pre.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    # Load SSH host keys.
+    ssh_pre.load_system_host_keys()
+    ssh_pre.connect(router_ip,
+                username=router_username,
+                password=router_password,
+                look_for_keys=False)
 
-    # Automatically add untrusted hosts
-    ssh_pre.set_missing_host_key_policy(
-        paramiko.AutoAddPolicy())
 
-    # initiate SSH connection
-    ssh_pre.connect(ip, username=username, password=password)
     print
-    "SSH connection established to %s" % ip
+    "SSH connection established to %s" % router_ip
 
     # Use invoke_shell to establish an 'interactive session'
     ssh = ssh_pre.invoke_shell()
