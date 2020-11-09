@@ -16,7 +16,7 @@ def sendRec(ssh, command):
     time.sleep(1)
 
     # Receive 5000 bytes and print to screen
-    output = ssh.recv(5000)
+    output = ssh.recv(65000)
     print(output)
 
 
