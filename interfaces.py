@@ -59,15 +59,20 @@ def devMain(ssh):
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
         try:
-            print("\n MENU PRINCIPAL")
-            print("Choisissez parmis les propositions suivantes")
+            print("\n MENU PRINCIPAL\n\n")
+
+            print("Choisissez parmis les propositions suivantes : ")
             print(
-                """\n
+                """\n\n\n
                 1 - Aperçu configuration
+                -----------------------------
                 2 - Configuration matériel
+                -----------------------------
                 3 - test de connexion
+                -----------------------------
                 0 - Quitter               
-                \n"""
+                -----------------------------
+                \n\n\n"""
             )
             menu_choice = int(input())
         except ValueError:
