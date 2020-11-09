@@ -23,6 +23,7 @@ def sendRec(ssh, command):
 
 
 def main():
+    global username, password
     longstring = """\
     \n
             /,,
