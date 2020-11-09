@@ -182,3 +182,5 @@ def show(ssh):
     show(ssh)
 
 
+if __name__ == '__main__':
+    main()
