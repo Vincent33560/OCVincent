@@ -21,6 +21,9 @@ def __init__(self, IP="", username="", password=""):
                 password=Password,
                 look_for_keys=False)
 
+def Interfaces():
+    ssh = paramiko.SSHClient()
+
     DEVICE_ACCESS = ssh.invoke_shell()
     DEVICE_ACCESS.send(b"en\n")
     DEVICE_ACCESS.send(b"vdcvdc\n")
@@ -35,3 +38,5 @@ def __init__(self, IP="", username="", password=""):
     # Read output from command.
     output = DEVICE_ACCESS.recv(65000)
     print(output.decode('ascii'))
+
+Interfaces(IP, Username,Password)
