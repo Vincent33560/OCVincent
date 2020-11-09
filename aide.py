@@ -1,9 +1,9 @@
 import paramiko
 import time
-import os
-import csv
 
 
+# import os
+# import csv
 
 def sendRec(ssh, command):
     """Send a command to the device and receive and print the result."""
@@ -17,45 +17,10 @@ def sendRec(ssh, command):
 
     # Receive 5000 bytes and print to screen
     output = ssh.recv(5000)
-    print
-    output
+    print(output)
 
 
 def main():
-    longstring = """\
-    \n
-            /,,
-           /\  )
-             \,'
-          /`'`\.
-              ,
-             ,@,
-            ,@@@,
-           ,@@@@@,
-    `@@@@@@@@@@@@@@@@@@@`
-      `@@@@@@@@@@@@@@@`
-        `@@@@@@@@@@@`
-       ,@@@@@@`@@@@@@,
-       @@@@`     `@@@@
-      ;@`           `@;
-        _   _   _   _
-       (   (   (   |_)
-        ~   ~   ~  |
-
-    Cisco 
-    CLI
-    Configuration with
-    Paramiko
-    Written by: Patrick Sinotte
-    Version 2.2864
-    Welcome, Comrade!
-    """
-
-    # Clear screen and print welcome to screen
-    #os.system("clear")
-    print
-    longstring
-
     router_ip = input("Entrez l'adresse IP cible : ")
     router_username = input("Entrez le username : ")
     router_password = input("Entrez le mot de passe : ")
@@ -67,29 +32,18 @@ def main():
     # Load SSH host keys.
     ssh_pre.load_system_host_keys()
     ssh_pre.connect(router_ip,
-                username=router_username,
-                password=router_password,
-                look_for_keys=False)
-
-
-    print
-    "SSH connection established to %s" % router_ip
+                    username=router_username,
+                    password=router_password,
+                    look_for_keys=False)
+    print("SSH connection established to %s" % router_ip)
 
     # Use invoke_shell to establish an 'interactive session'
     ssh = ssh_pre.invoke_shell()
-    print
-    "Interactive SSH session established"
+    print("Interactive SSH session established")
 
     # Strip the initial router prompt
     output = ssh.recv(1000)
-
-
-
-    # Turn off automatic domain-lookup
-    sendRec(ssh, "conf t")
-    sendRec(ssh, "no ip domain-lookup")
-
-    devMain(ssh)
+    print(output)
 
 
 def devMain(ssh):
@@ -107,23 +61,24 @@ def devMain(ssh):
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
         try:
-            print
-            "\nMAIN MENU"
-            print
-            "Please choose from one of the following options:"
-            print
-            """\n
+            print(
+                "\nMAIN MENU")
+            print(
+                "Please choose from one of the following options:")
+            print(
+                """\n
                 1 - show configuration \n
                 2 - configure device \n
                 3 - test connectivity \n
                 4 - save/load \n
-                0 - logout \n"""
+                0 - logout \n""")
             menu_choice = int(input())
         except ValueError:
-            print
-            "Choose a number from 1 to 4"
+            print(
+                "Choose a number from 1 to 4")
     if menu_choice == 1:
         show(ssh)
+
 
 def show(ssh):
     """Allows user to run a variety of show commands."""
@@ -131,12 +86,12 @@ def show(ssh):
     menu_choice = -1
     while 0 > menu_choice or 8 < menu_choice:
         try:
-            print
-            "\nSHOW MENU"
-            print
-            "Please choose from one of the following options:"
-            print
-            """\n
+            print(
+                "\nSHOW MENU")
+            print(
+                "Please choose from one of the following options:")
+            print(
+                """\n
                 1 - show running configuration \n
                 2 - show ip interfaces brief \n
                 3 - show routing table \n
@@ -145,11 +100,11 @@ def show(ssh):
                 6 - show version \n
                 7 - show license \n
                 8 - show vlans \n
-                0 - back \n"""
+                0 - back \n""")
             menu_choice = int(input())
         except ValueError:
-            print
-            "Choose a number from 1 to 8"
+            print(
+                "Choose a number from 1 to 8")
     if menu_choice == 1:
         sendRec(ssh, "\x1a")
         sendRec(ssh, "show run")
