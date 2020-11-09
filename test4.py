@@ -18,7 +18,7 @@ class Connection:
                     username=Username,
                     password=Password,
                     look_for_keys=False)
-
+        print("ça foncitonne")
 class Commande(Connection):
     def Interfaces(IP, Username, Password):
         ssh = paramiko.SSHClient()
