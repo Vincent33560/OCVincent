@@ -1,6 +1,17 @@
-from main import *
-def Interfaces():
+from main import router_username, router_password, router_ip
+import paramiko
 
+
+def Interfaces():
+    ssh = paramiko.SSHClient()
+    # Add SSH host key when missing.
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    # Load SSH host keys.
+    ssh.load_system_host_keys()
+    ssh.connect(router_ip,
+                username=router_username,
+                password=router_password,
+                look_for_keys=False)
 
 
     DEVICE_ACCESS = ssh.invoke_shell()

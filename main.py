@@ -1,6 +1,8 @@
 import paramiko
 import time
 from getpass import getpass
+#from interfaces import Interfaces
+
 
 router_ip = input("Entrez l'adresse IP cible : ")
 router_username = input("Entrez le username : ")
