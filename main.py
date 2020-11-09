@@ -24,7 +24,7 @@ def run_command_on_device(router_ip, username, password):
             print("Connexion réussie")
 
             # Run command.
-            DEVICE_ACCESS = ssh.invoke_shell()
+            # DEVICE_ACCESS = ssh.invoke_shell()
 
 
 
