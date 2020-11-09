@@ -31,8 +31,8 @@ def run_command_on_device(router_ip, username, password):
 
 
             # Read output from command.
-            output = DEVICE_ACCESS.recv(65000)
-            print(output.decode('ascii'))
+            #output = DEVICE_ACCESS.recv(65000)
+            #print(output.decode('ascii'))
 
 
         except paramiko.AuthenticationException:
