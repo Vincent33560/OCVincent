@@ -96,7 +96,6 @@ def main():
 
     # Create instance of SSHClient object
     ssh_pre = paramiko.SSHClient()
-
     # Automatically add untrusted hosts
     ssh_pre.set_missing_host_key_policy(
         paramiko.AutoAddPolicy())

@@ -4,26 +4,14 @@ import time
 
 # import os
 # import csv
+router_ip = input("Entrez l'adresse IP cible : ")
+router_username = input("Entrez le username : ")
+router_password = input("Entrez le mot de passe : ")
 
-def sendRec(ssh, command):
-    """Send a command to the device and receive and print the result."""
-
-    # Send the device a command
-    ssh.send("\n")
-    ssh.send(str(command) + "\n")
-
-    # Wait for the command to complete in seconds
-    time.sleep(1)
-
-    # Receive 5000 bytes and print to screen
-    output = ssh.recv(5000)
-    print(output)
 
 
 def main():
-    router_ip = input("Entrez l'adresse IP cible : ")
-    router_username = input("Entrez le username : ")
-    router_password = input("Entrez le mot de passe : ")
+
 
     # Prompt user for pre-configured IP address and ssh credentials
     ssh_pre = paramiko.SSHClient()
@@ -134,5 +122,20 @@ def show(ssh):
         devMain(ssh)
     show(ssh)
 
+def sendRec(ssh, command):
+    """Send a command to the device and receive and print the result."""
 
-devMain(main())
+    # Send the device a command
+    ssh.send("\n")
+    ssh.send(str(command) + "\n")
+
+    # Wait for the command to complete in seconds
+    time.sleep(1)
+
+    # Receive 5000 bytes and print to screen
+    output = ssh.recv(5000)
+    print(output)
+
+
+if __name__ == '__main__':
+    main()

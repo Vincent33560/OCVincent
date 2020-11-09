@@ -1,49 +1,61 @@
 import paramiko
 import time
 
-
-IP = input("Entrez l'adresse IP cible : ")
-Username = input("Entrez le username : ")
-Password = input("Entrez le mot de passe : ")
-
-class Connection:
-    def __init__(self, IP="", username="", password=""):
-        self.ip = IP,
-        self.username = username,
-        self.password = password,
+# must setup login local user on the device (set priv to 15)
+username = "vincent"
+password = "admin"
 
 
-        ssh = paramiko.SSHClient()
-        # Add SSH host key when missing.
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Load SSH host keys.
-        ssh.load_system_host_keys()
-        ssh.connect(IP,
-                    username=Username,
-                    password=Password,
-                    look_for_keys=False)
-        print("ça foncitonne")
-class Commande(Connection):
-    def Interfaces():
-        super().__init__(IP, Username, Password)
+def main():
+	# may want to take this IP address in a different way, hard coded for starter script
+	ip_address = "192.168.100.150"
 
-        ssh = paramiko.SSHClient()
-        DEVICE_ACCESS = ssh.invoke_shell()
-        DEVICE_ACCESS.send(b"en\n")
-        DEVICE_ACCESS.send(b"vdcvdc\n")
-        DEVICE_ACCESS.send(b"conf t\n")
-        DEVICE_ACCESS.send(b"int g0/2\n")
-        DEVICE_ACCESS.send(b"ip address 192.168.21.25 255.255.255.0\n")
-        DEVICE_ACCESS.send(b"no shut\n")
-        DEVICE_ACCESS.send(b"end\n")
-        DEVICE_ACCESS.send(b"sh ip int br\n")
-        time.sleep(1)
+	# initialze the client
+	ssh_client = paramiko.SSHClient()
 
-        # Read output from command.
-        output = DEVICE_ACCESS.recv(65000)
-        print(output.decode('ascii'))
-        print("ça fonctionne")
+	# sends the client and the IP axdress to initiate session function
+	remote_connection = initiate_ssh_session(ssh_client, ip_address)
+
+	# use the connection to do stuff in the router via the ssh connection
+	remote_connection.send("configure terminal\n")
+	remote_connection.send("int loop 0\n")
+	remote_connection.send("ip address 1.1.1.1 255.255.255.255\n")
+	remote_connection.send("int loop 1\n")
+	remote_connection.send("ip address 2.2.2.2 255.255.255.255\n")
+	remote_connection.send("router ospf 1\n")
+	remote_connection.send("network 0.0.0.0 255.255.255.255 area 0\n")
+
+	for n in range (2,21):
+	    print("Creating VLAN ".format(str(n)))
+	    remote_connection.send("vlan " + str(n) +  "\n")
+	    remote_connection.send("name Python_VLAN " + str(n) +  "\n")
+	    # pause long enough for vlan to be created
+	    time.sleep(0.5)
+
+	remote_connection.send("end\n")
+
+	# wait for a second, then output the remote connection session to screen
+	time.sleep(1)
+	output = remote_connection.recv(65535)
+	print(output)
+
+	# be sure to close the client when work is completed
+	ssh_client.close
 
 
-bb = Connection(IP, Username, Password)
-blabla = Commande.Interfaces()
+# initiates ssh client, pulls public key from device, connects to device and return connection object
+def initiate_ssh_session(ssh_client, ip_address):
+	# accept a public key from switch for use to connect to the switch via SSH
+	ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+	ssh_client.connect(hostname=ip_address,username=username,password=password)
+
+	print("Successful connection".format(ip_address))
+
+	# returns the remote shell connection object
+	return ssh_client.invoke_shell()
+
+
+if __name__ == "__main__":
+	main()
+
+exit()
