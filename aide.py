@@ -135,4 +135,4 @@ def show(ssh):
     show(ssh)
 
 
-main()
+devMain(main())
