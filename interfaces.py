@@ -50,6 +50,14 @@ def main():
             print("Incorrect password: ")
     except:
         print("Quelque chose ne vas pas")
+    devMain(ssh)
+
+def devMain(ssh):
+    sendRec(ssh, "\x1a")
+    sendRec(ssh, "show version")
+
+
+
 
 
 def Interfaces1(ssh):
