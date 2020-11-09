@@ -53,11 +53,27 @@ def main():
     devMain(ssh)
 
 def devMain(ssh):
+    sendRec(ssh, "enable")
+    sendRec(ssh, "vdcvdc\n")
     sendRec(ssh, "\x1a")
     sendRec(ssh, "show version")
 
-
-
+    menu_choice = -1
+    while 0 > menu_choice or 4 < menu_choice:
+        try:
+            print("\n MENU PRINCIPAL")
+            print("Choisissez parmis les propositions suivantes")
+            print(
+                """\n
+                1 - Aperçu configuration
+                2 - Configuration matériel
+                3 - test de connexion
+                0 - Quitter               
+                \n"""
+            )
+            menu_choice = int(input())
+        except ValueError:
+            print("Choisissez un chiffre entre 1 et 3")
 
 
 def Interfaces1(ssh):
