@@ -55,8 +55,6 @@ def main():
 def devMain(ssh):
     sendRec(ssh, "enable")
     sendRec(ssh, "vdcvdc\n")
-    sendRec(ssh, "\x1a")
-    sendRec(ssh, "show version")
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
