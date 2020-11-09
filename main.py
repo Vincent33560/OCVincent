@@ -35,4 +35,4 @@ def run_command_on_device(router_ip, username, password):
 
 
 # run_command_on_device(router_ip, router_username, router_password)
-start_connect = run_command_on_device(router_ip, router_username, router_password)
+#start_connect = run_command_on_device(router_ip, router_username, router_password)
