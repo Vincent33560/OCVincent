@@ -42,7 +42,8 @@ class Commande(Connection):
         # Read output from command.
         output = DEVICE_ACCESS.recv(65000)
         print(output.decode('ascii'))
+        print("ça fonctionne")
 
 
-
-blabla = Commande(IP, Username, Password)
+bb = Connection(IP, Username, Password)
+blabla = Commande.Interfaces()
