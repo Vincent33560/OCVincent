@@ -17,7 +17,7 @@ def sendRec(ssh, command):
 
     # Receive 5000 bytes and print to screen
     output = ssh.recv(65000)
-    print(output)
+    print(output.decode('ascii'))
 
 
 def main():
@@ -42,9 +42,8 @@ def main():
                         look_for_keys=False)
             print("Connexion réussie")
             ssh = ssh_pre.invoke_shell()
-            output = ssh.recv(1000)
-            print(output)
-
+            output = ssh.recv(65000)
+            print(output.decode('ascii'))
 
         except paramiko.AuthenticationException:
             print("Incorrect password: ")
