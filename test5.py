@@ -82,7 +82,7 @@ def main():
     """
 
     # Clear screen and print welcome to screen
-    os.system("clear")
+
     print
     longstring
 
