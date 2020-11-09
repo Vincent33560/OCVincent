@@ -1,10 +1,8 @@
 import paramiko
 import time
 
-IP = input("Entrez l'adresse IP cible : ")
-Username = input("Entrez le username : ")
-Password = input("Entrez le mot de passe : ")
-class Test:
+
+class Connection:
     def __init__(self, IP="", username="", password=""):
         self.ip = IP,
         self.username = username,
@@ -21,6 +19,7 @@ class Test:
                     password=Password,
                     look_for_keys=False)
 
+class Commande(Connection):
     def Interfaces(self):
         ssh = paramiko.SSHClient()
 
@@ -39,4 +38,8 @@ class Test:
         output = DEVICE_ACCESS.recv(65000)
         print(output.decode('ascii'))
 
-blabla = Test(IP, Username,Password)
+
+IP = input("Entrez l'adresse IP cible : ")
+Username = input("Entrez le username : ")
+Password = input("Entrez le mot de passe : ")
+blabla = Commande(IP, Username,Password)
