@@ -20,7 +20,7 @@ class Connection:
                     look_for_keys=False)
 
 class Commande(Connection):
-    def Interfaces(self):
+    def Interfaces(IP, Username, Password):
         ssh = paramiko.SSHClient()
 
         DEVICE_ACCESS = ssh.invoke_shell()
@@ -42,4 +42,4 @@ class Commande(Connection):
 IP = input("Entrez l'adresse IP cible : ")
 Username = input("Entrez le username : ")
 Password = input("Entrez le mot de passe : ")
-blabla = Commande(IP, Username,Password)
+blabla = Commande(IP, Username, Password)
