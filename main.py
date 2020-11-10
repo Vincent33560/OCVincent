@@ -244,9 +244,7 @@ def traceTest(ssh):
 
     trace = input("Entrez une addresse que vous souhaitez tracer : ")
     send(ssh, "traceroute " + trace)
-    time.sleep(10)
-    output = ssh.recv(65000)
-    print(output.decode('ascii'))
+
 
     connTest(ssh)
 
@@ -259,9 +257,6 @@ def pingTest(ssh):
         connTest(ssh)
     else:
         send(ssh, "ping " + ping)
-        time.sleep(5)
-        output = ssh.recv(65000)
-        print(output.decode('ascii'))
 
         connTest(ssh)
 
