@@ -52,8 +52,8 @@ def main():
     mainMenu(ssh)
 
 def mainMenu(ssh):
-    send(ssh, "enable")
-    send(ssh, "vdcvdc\n")
+    send(ssh, 0, "enable")
+    send(ssh, 10, "vdcvdc\n")
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
