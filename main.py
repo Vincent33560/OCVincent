@@ -176,6 +176,8 @@ def intConf(ssh):
         send(ssh, 'int ' + interface)
         send(ssh, 'ip add ' + ip_address + " " + mask)
         send(ssh, 'no shut')
+        send(ssh, 'end')
+
     intConf(ssh)
 
 def routeConf(ssh):
