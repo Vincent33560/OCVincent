@@ -269,6 +269,7 @@ def saveLoad(ssh):
     print("\nSAUVEGARDER / CHARGER\n")
     print("----------------------")
     while 0 > menu_choice or 4 < menu_choice:
+        menu_choice = -1
         try:
 
             print("Choisissez parmi les propositions suivantes : ")
@@ -284,7 +285,9 @@ def saveLoad(ssh):
                 -----------------------------------
                 0 - Quitter               
                 -----------------------------------
-                \n\n\n""")
+                \n\n\n"""
+            )
+
             menu_choice = int(input())
 
         except ValueError:
