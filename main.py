@@ -85,7 +85,7 @@ def mainMenu(ssh):
     elif menu_choice == 3:
         connTest(ssh)
     elif menu_choice == 0:
-        mainMenu(ssh)
+        exit(ssh)
 
 def showConf(ssh):
 
@@ -259,7 +259,6 @@ def pingTest(ssh):
         connTest(ssh)
     else:
         send(ssh, "ping " + ping)
-        send(ssh, "end")
         time.sleep(5)
         output = ssh.recv(65000)
         print(output.decode('ascii'))
