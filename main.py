@@ -196,7 +196,14 @@ def routeConf(ssh):
         send(ssh, 'end')
     routeConf(ssh)
 
+def setHostname(ssh):
+    print("\n CONFIUGRATION HOSTNAME \n")
+    print("-----------------------------\n")
 
+    hostname = input("Entrez un Hostname : ")
+    send(ssh, 'conf t')
+    send(ssh, 'hostname ' + hostname)
+    confMain(ssh)
 
 
 
