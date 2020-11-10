@@ -302,9 +302,8 @@ def saveLoad(ssh):
     elif menu_choice == 2:
         tftp = input("Entrez l'adresse de votre serveur TFTP :")
         file_name = input("Entrez un nom pour votre sauvegarde :")
-        send(ssh, "copy running-config tftp" + tftp)
-        time.sleep(2)
-        send(ssh, tftp)
+        send(ssh, "copy running-config tftp " + tftp)
+
         time.sleep(2)
         send(ssh,+file_name)
         time.sleep(2)
