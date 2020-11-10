@@ -5,9 +5,9 @@ import time
 
 
 
-def send(ssh, wait, command):
+def send(ssh, command):
     """Send a command to the device and receive and print the result."""
-    wait = time.sleep(0)
+
     # Send the device a command
     ssh.send("\n")
     ssh.send(str(command) + "\n")
@@ -52,8 +52,8 @@ def main():
     mainMenu(ssh)
 
 def mainMenu(ssh):
-    send(ssh, 0, "enable")
-    send(ssh, 10, "vdcvdc\n")
+    send(ssh, "enable")
+    send(ssh, "vdcvdc\n")
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
@@ -243,9 +243,11 @@ def traceTest(ssh):
     print("--------------")
 
     trace = input("Entrez une addresse que vous souhaitez tracer : ")
-    resultat = send(ssh, 5, "traceroute " + trace)
-    print(resultat(trace))
-    connTest(ssh)
+    send(ssh, "traceroute " + trace)
+    time.sleep(10)
+    output = ssh.recv(65000)
+    print(output.decode('ascii'))
+
 def pingTest(ssh):
     print("\nTEST DE PING\n")
     print("----------------------")
@@ -256,7 +258,7 @@ def pingTest(ssh):
 
     send(ssh, "ping " + ping)
     send(ssh, "end")
-    connTest(ssh)
+    connTest()
 
 
 
