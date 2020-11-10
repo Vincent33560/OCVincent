@@ -117,6 +117,7 @@ def showConf(ssh):
         if menu_choice == 1:
             time.sleep(2)
             sendRec(ssh, "sh run")
+            time.sleep(2)
         elif menu_choice == 2:
             sendRec(ssh, "sh ip int brief")
         elif menu_choice == 3:
