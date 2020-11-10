@@ -248,6 +248,8 @@ def traceTest(ssh):
     output = ssh.recv(65000)
     print(output.decode('ascii'))
 
+    connTest(ssh)
+
 def pingTest(ssh):
     print("\nTEST DE PING\n")
     print("----------------------")
@@ -255,13 +257,14 @@ def pingTest(ssh):
     ping = input("Entrez une adresse que vous souhaitez pinguer : [q pour quitter")
     if ping == 'q':
         connTest(ssh)
+    else:
+        send(ssh, "ping " + ping)
+        send(ssh, "end")
+        time.sleep(5)
+        output = ssh.recv(65000)
+        print(output.decode('ascii'))
 
-    send(ssh, "ping " + ping)
-    send(ssh, "end")
-    connTest()
-
-
-
+        connTest(ssh)
 
 if __name__ == '__main__':
     main()
