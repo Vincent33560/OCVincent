@@ -64,11 +64,11 @@ def mainMenu(ssh):
             print("Choisissez parmi les propositions suivantes : ")
             print(
                 """\n\n\n
-                1 - Aperçu configuration
+                1 - APERCU CONFIGURATION
                 -----------------------------
-                2 - Configuration matériel
+                2 - CONFIGURATION MATERIEL
                 -----------------------------
-                3 - test de connexion
+                3 - TEST DE CONNEXION
                 -----------------------------
                 0 - Quitter               
                 -----------------------------
@@ -152,14 +152,14 @@ def confMain(ssh):
         except ValueError:
             print("Choisissez un chiffre entre 1 et 3")
 
-            if menu_choice == 1:
-                intConf(ssh)
-            elif menu_choice == 2:
-                routeConf(ssh)
-            elif menu_choice == 3:
-                setHostname(ssh)
-            elif menu_choice == 0:
-                main()
+    if menu_choice == 1:
+        intConf(ssh)
+    elif menu_choice == 2:
+        routeConf(ssh)
+    elif menu_choice == 3:
+        setHostname(ssh)
+    elif menu_choice == 0:
+        main()
 
 def intConf(ssh):
     print("\n CONFIUGRATION DES INTERFACES\n")
