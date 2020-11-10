@@ -5,9 +5,9 @@ import time
 
 
 
-def send(ssh, command):
+def send(ssh, wait, command):
     """Send a command to the device and receive and print the result."""
-
+    wait = time.sleep(0)
     # Send the device a command
     ssh.send("\n")
     ssh.send(str(command) + "\n")
@@ -243,10 +243,9 @@ def traceTest(ssh):
     print("--------------")
 
     trace = input("Entrez une addresse que vous souhaitez tracer : ")
-    resultat = send(ssh, "traceroute " + trace)
-    time.sleep(5)
-    print(resultat)
-
+    resultat = send(ssh, 5, "traceroute " + trace)
+    print(resultat(trace))
+    connTest(ssh)
 def pingTest(ssh):
     print("\nTEST DE PING\n")
     print("----------------------")
@@ -257,6 +256,7 @@ def pingTest(ssh):
 
     send(ssh, "ping " + ping)
     send(ssh, "end")
+    connTest(ssh)
 
 
 
