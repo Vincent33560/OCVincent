@@ -5,7 +5,7 @@ import time
 
 
 
-def sendRec(ssh, command):
+def send(ssh, command):
     """Send a command to the device and receive and print the result."""
 
     # Send the device a command
@@ -49,11 +49,11 @@ def main():
             print("Incorrect password: ")
     except:
         print("Quelque chose ne vas pas")
-    devMain(ssh)
+    mainMenu(ssh)
 
-def devMain(ssh):
-    sendRec(ssh, "enable")
-    sendRec(ssh, "vdcvdc\n")
+def mainMenu(ssh):
+    send(ssh, "enable")
+    send(ssh, "vdcvdc\n")
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
@@ -61,7 +61,7 @@ def devMain(ssh):
             print("\n MENU PRINCIPAL\n")
             print("--------------------\n")
 
-            print("Choisissez parmis les propositions suivantes : ")
+            print("Choisissez parmi les propositions suivantes : ")
             print(
                 """\n\n\n
                 1 - Aperçu configuration
@@ -85,7 +85,7 @@ def devMain(ssh):
     elif menu_choice == 3:
         connTest(ssh)
     elif menu_choice == 0:
-        main()
+        mainMenu(ssh)
 
 def showConf(ssh):
 
@@ -95,14 +95,14 @@ def showConf(ssh):
             print("\n MENU APERCU CONFIGURATION\n")
             print("------------------------------\n")
 
-            print("Choisissez parmis les propositions suivantes : ")
+            print("Choisissez parmi les propositions suivantes : ")
             print(
                 """\n\n\n
                 1 - SHOW RUNNING CONFIGURATION
                 -----------------------------
                 2 - SHOW IP INTERFACE BRIEF
                 -----------------------------
-                3 - SHOW VLAN
+                3 - SHOW ACCESS LIST
                 -----------------------------
                 4 - SHOW IP ROUTE                
                 -----------------------------
@@ -116,47 +116,85 @@ def showConf(ssh):
 
         if menu_choice == 1:
             time.sleep(2)
-            sendRec(ssh, "sh run")
+            send(ssh, "sh run")
             time.sleep(2)
         elif menu_choice == 2:
-            sendRec(ssh, "sh ip int brief")
+            send(ssh, "sh ip int brief")
         elif menu_choice == 3:
-            sendRec(ssh, "sh vlan")
+            send(ssh, "sh ip access-list")
         elif menu_choice == 4:
-            sendRec(ssh, "show ip route")
+            send(ssh, "show ip route")
         elif menu_choice == 0:
-            devMain(ssh)
+            mainMenu(ssh)
         showConf(ssh)
 
+def confMain(ssh):
+    menu_choice = -1
+    while 0 > menu_choice or 4 < menu_choice:
+        try:
+            print("\n MENU DE CONFIGURATION\n")
+            print("--------------------\n")
+
+            print("Choisissez parmi les propositions suivantes : ")
+            print(
+                """\n\n\n
+                1 - CONFIGURER INTERFACE
+                -----------------------------
+                2 - CONFIGURER ROUTE
+                -----------------------------
+                3 - CONFIGURER HOSTNAME
+                -----------------------------
+                0 - Quitter               
+                -----------------------------
+                \n\n\n"""
+            )
+            menu_choice = int(input())
+        except ValueError:
+            print("Choisissez un chiffre entre 1 et 3")
+
+            if menu_choice == 1:
+                intConf(ssh)
+            elif menu_choice == 2:
+                routeConf(ssh)
+            elif menu_choice == 3:
+                setHostname(ssh)
+            elif menu_choice == 0:
+                main()
+
+def intConf(ssh):
+    print("\n CONFIUGRATION DES INTERFACES\n")
+    print("------------------------------------\n")
+
+    send(ssh, 'sh ip int brief')
+    interface = input("Choisissez une interface à configurer [q pour quitter] : \n")
+    if interface == 'q':
+        confMain(ssh)
+    else:
+        ip_address = input("Addresse IP ? : ")
+        mask = input("Masque de sous-réseau : ")
+        send(ssh, 'conf terminal')
+        send(ssh, 'int ' + interface)
+        send(ssh, 'ip add ' + ip_address + " " + mask)
+        send(ssh, 'no shut')
+    intConf(ssh)
+
+def routeConf(ssh):
+    print("\n CONFIUGRATION DES ROUTES\n")
+    print("------------------------------------\n")
+
+    send(ssh, 'sh ip route')
+    route = input("Adresse à atteindre [q pour quitter] :  ")
+    if route == "q":
+        confMain(ssh)
+    else:
+        wildcard = input("Masque inversé : ")
+        next = input("Interface ou adresse de prochain saut : ")
+        send(ssh, "conf t")
+        send(ssh, "ip route " + route + " " + wildcard + " " + next)
+    routeConf(ssh)
 
 
-def Interfaces1(ssh):
-    #ssh = paramiko.SSHClient()
-    # Add SSH host key when missing.
-    #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    # Load SSH host keys.
-    #ssh.load_system_host_keys()
-    #ssh.connect(router_ip,
-                #username=router_username,
-                #password=router_password,
-                #look_for_keys=False)
 
-    #DEVICE_ACCESS = ssh_pre.invoke_shell()
-    sendRec(ssh, "enable")
-    sendRec(ssh, "vdcvdc\n")
-    ssh.send(b"conf t\n")
-    ssh.send(b"int g0/1\n")
-    ssh.send(b"ip address 192.168.1.25 255.255.255.0\n")
-    ssh.send(b"no shut\n")
-    ssh.send(b"end\n")
-    ssh.send(b"sh ip int br\n")
-    time.sleep(1)
-
-    # Read output from command.
-    output = ssh.recv(65000)
-    print(output.decode('ascii'))
-
-    Interfaces1(ssh)
 
 def Interfaces2():
     ssh = paramiko.SSHClient()
