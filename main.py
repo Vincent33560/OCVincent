@@ -70,6 +70,8 @@ def mainMenu(ssh):
                 -----------------------------
                 3 - TEST DE CONNEXION
                 -----------------------------
+                 4 - SAUVEGARDER / CHARGER
+                -----------------------------
                 0 - Quitter               
                 -----------------------------
                 \n\n\n"""
@@ -84,6 +86,8 @@ def mainMenu(ssh):
         confMain(ssh)
     elif menu_choice == 3:
         connTest(ssh)
+    elif menu_choice == 4:
+        saveLoad(ssh)
     elif menu_choice == 0:
         exit(ssh)
 
@@ -130,7 +134,7 @@ def showConf(ssh):
 
 def confMain(ssh):
     menu_choice = -1
-    while 0 > menu_choice or 4 < menu_choice:
+    while 0 > menu_choice or 3 < menu_choice:
         try:
             print("\n MENU DE CONFIGURATION\n")
             print("--------------------\n")
@@ -208,7 +212,7 @@ def setHostname(ssh):
 
 def connTest(ssh):
     menu_choice = -1
-    while 0 > menu_choice or 4 < menu_choice:
+    while 0 > menu_choice or 2 < menu_choice:
         try:
             print("\n MENU TEST DE CONNEXION\n")
             print("--------------------\n")
@@ -259,6 +263,52 @@ def pingTest(ssh):
         send(ssh, "ping " + ping)
 
         connTest(ssh)
+
+
+def saveLoad(ssh):
+    print("\nSAUVEGARDER / CHARGER\n")
+    print("----------------------")
+    while 0 > menu_choice or 4 < menu_choice:
+        try:
+
+            print("Choisissez parmi les propositions suivantes : ")
+            print(
+                """\n\n\n
+                1 - SAUVEGARDER DANS STARTUP CONFIG
+                -----------------------------------
+                2 - SAUVEGARDER SUR TFTP
+                -----------------------------------
+                3 - CHARGER SUR STARTUP CONFIG
+                -----------------------------------
+                4 - CHARGER DEPUIS TFTP
+                -----------------------------------
+                0 - Quitter               
+                -----------------------------------
+                \n\n\n""")
+            menu_choice = int(input())
+
+        except ValueError:
+            print("Choisissez un chiffre entre 1 et 4")
+
+    if menu_choice == 1:
+        send(ssh, "wr")
+        time.sleep(2)
+        saveLoad(ssh)
+    elif menu_choice == 2:
+        tftp = input("Entrez l'adresse de votre serveur TFTP :")
+        file_name = input("Entrez un nom pour votre sauvegarde :")
+        send(ssh, "copy running-config tftp:"+tftp)
+        send(ssh,+file_name)
+        saveLoad(ssh)
+    elif menu_choice == 3:
+        loadStart(ssh)
+    elif menu_choice == 4:
+        loadComp(ssh)
+    elif menu_choice == 0:
+        mainMenu(ssh)
+
+
+
 
 if __name__ == '__main__':
     main()
