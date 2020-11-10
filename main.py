@@ -4,7 +4,6 @@ import paramiko
 import time
 
 
-
 def send(ssh, command):
     """Send a command to the device and receive and print the result."""
 
@@ -18,7 +17,6 @@ def send(ssh, command):
     # Receive 5000 bytes and print to screen
     output = ssh.recv(65000)
     print(output.decode('ascii'))
-
 
 def main():
     """ Connect to a device, run a command, and return the output."""
@@ -45,6 +43,9 @@ def main():
             output = ssh.recv(65000)
             print(output.decode('ascii'))
 
+            send(ssh, "enable")
+            send(ssh, "vdcvdc\n")
+
         except paramiko.AuthenticationException:
             print("Mot de passe incorrect : ")
     except:
@@ -52,8 +53,6 @@ def main():
     mainMenu(ssh)
 
 def mainMenu(ssh):
-    send(ssh, "enable")
-    send(ssh, "vdcvdc\n")
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
@@ -241,7 +240,6 @@ def connTest(ssh):
     elif menu_choice == 0:
         mainMenu(ssh)
 
-
 def traceTest(ssh):
     print("\nTRACEROUTE\n")
     print("--------------")
@@ -263,7 +261,6 @@ def pingTest(ssh):
         send(ssh, "ping " + ping)
 
         connTest(ssh)
-
 
 def saveLoad(ssh):
     print("\nSAUVEGARDER / CHARGER\n")
@@ -313,8 +310,6 @@ def saveLoad(ssh):
         loadComp(ssh)
     elif menu_choice == 0:
         mainMenu(ssh)
-
-
 
 
 if __name__ == '__main__':
