@@ -268,8 +268,10 @@ def pingTest(ssh):
 def saveLoad(ssh):
     print("\nSAUVEGARDER / CHARGER\n")
     print("----------------------")
+
+    menu_choice = -1
+
     while 0 > menu_choice or 4 < menu_choice:
-        menu_choice = -1
         try:
 
             print("Choisissez parmi les propositions suivantes : ")
