@@ -159,7 +159,7 @@ def confMain(ssh):
     elif menu_choice == 3:
         setHostname(ssh)
     elif menu_choice == 0:
-        mainMenu()
+        mainMenu(ssh)
 
 def intConf(ssh):
     print("\n CONFIUGRATION DES INTERFACES\n")
