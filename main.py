@@ -13,7 +13,7 @@ def send(ssh, command):
     ssh.send(str(command) + "\n")
 
     # Wait for the command to complete in seconds
-    time.sleep(1)
+    time.sleep(.5)
 
     # Receive 5000 bytes and print to screen
     output = ssh.recv(65000)
@@ -159,7 +159,7 @@ def confMain(ssh):
     elif menu_choice == 3:
         setHostname(ssh)
     elif menu_choice == 0:
-        main()
+        mainMenu()
 
 def intConf(ssh):
     print("\n CONFIUGRATION DES INTERFACES\n")
@@ -203,7 +203,61 @@ def setHostname(ssh):
     hostname = input("Entrez un Hostname : ")
     send(ssh, 'conf t')
     send(ssh, 'hostname ' + hostname)
+    send(ssh, 'end')
     confMain(ssh)
+
+def connTest(ssh):
+    menu_choice = -1
+    while 0 > menu_choice or 4 < menu_choice:
+        try:
+            print("\n MENU TEST DE CONNEXION\n")
+            print("--------------------\n")
+
+            print("Choisissez parmi les propositions suivantes : ")
+            print(
+                """\n\n\n
+                1 - TRACEROUTE
+                -----------------------------
+                2 - PING
+                -----------------------------
+                0 - Quitter               
+                -----------------------------
+                \n\n\n"""
+            )
+
+            menu_choice = int(input())
+
+        except ValueError:
+            print("Choisissez un chiffre entre 1 et 2")
+
+    if menu_choice == 1:
+        traceTest(ssh)
+    elif menu_choice == 2:
+        pingTest(ssh)
+    elif menu_choice == 0:
+        mainMenu(ssh)
+
+
+def traceTest(ssh):
+    print("\nTRACEROUTE\n")
+    print("--------------")
+
+    trace = input("Entrez une addresse que vous souhaitez tracer : ")
+    resultat = send(ssh, "traceroute " + trace)
+    time.sleep(5)
+    print(resultat)
+
+def pingTest(ssh):
+    print("\nTEST DE PING\n")
+    print("----------------------")
+
+    ping = input("Entrez une adresse que vous souhaitez pinguer : [q pour quitter")
+    if ping == 'q':
+        connTest(ssh)
+
+    send(ssh, "ping " + ping)
+    send(ssh, "end")
+
 
 
 
