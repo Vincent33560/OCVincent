@@ -305,9 +305,11 @@ def saveLoad(ssh):
 
         saveLoad(ssh)
     elif menu_choice == 3:
-        loadStart(ssh)
+        send(ssh, "copy start run")
     elif menu_choice == 4:
-        loadComp(ssh)
+    file = input("Entre le chemin tftp du fichier specifié :")
+    send(ssh, "copy running-config tftp:" + file)
+    
     elif menu_choice == 0:
         mainMenu(ssh)
 
