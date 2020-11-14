@@ -300,16 +300,13 @@ def saveLoad(ssh):
         tftp = input("Entrez l'adresse de votre serveur TFTP :")
         #file_name = input("Entrez un nom pour votre sauvegarde :")
         send(ssh, "copy running-config tftp" + tftp)
-
         time.sleep(2)
-
         saveLoad(ssh)
     elif menu_choice == 3:
         send(ssh, "copy start run")
     elif menu_choice == 4:
-    file = input("Entre le chemin tftp du fichier specifié :")
-    send(ssh, "copy running-config tftp:" + file)
-    
+        file = input("Entre le chemin tftp du fichier specifié :")
+        send(ssh, "copy running-config tftp:" + file)
     elif menu_choice == 0:
         mainMenu(ssh)
 
