@@ -1,34 +1,28 @@
-#from main import run_command_on_device
-#from main import router_username, router_password, router_ip
+
 import paramiko
 import time
 
 
 def send(ssh, command):
-    """Send a command to the device and receive and print the result."""
 
-    # Send the device a command
     ssh.send("\n")
     ssh.send(str(command) + "\n")
 
-    # Wait for the command to complete in seconds
     time.sleep(.5)
 
-    # Receive 5000 bytes and print to screen
     output = ssh.recv(65000)
     print(output.decode('ascii'))
 
 def main():
-    """ Connect to a device, run a command, and return the output."""
+
     router_ip = input("Entrez l'adresse IP cible : ")
     router_username = input("Entrez le username : ")
     router_password = input("Entrez le mot de passe : ")
 
     try:
         ssh_pre = paramiko.SSHClient()
-        # Add SSH host key when missing.
         ssh_pre.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Load SSH host keys.
+
         ssh_pre.load_system_host_keys()
 
         try:
@@ -91,7 +85,7 @@ def mainMenu(ssh):
         exit(ssh)
 
 def showConf(ssh):
-
+# Fonction permettant d'afficher le menu et qui prend en paramètres
     menu_choice =-1
     while 0 > menu_choice < 4:
         try:
