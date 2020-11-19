@@ -3,14 +3,14 @@ import paramiko
 import time
 
 
-def send(ssh, command):
+def send(shell, command):
 
-    ssh.send("\n")
-    ssh.send(str(command) + "\n")
+    shell.send("\n")
+    shell.send(str(command) + "\n")
 
     time.sleep(.5)
 
-    output = ssh.recv(65000)
+    output = shell.recv(65000)
     print(output.decode('ascii'))
 
 def main():
@@ -33,20 +33,20 @@ def main():
                         password=router_password,
                         look_for_keys=False)
             print("Connexion réussie")
-            ssh = ssh_pre.invoke_shell()
-            output = ssh.recv(65000)
+            shell = ssh_pre.invoke_shell()
+            output = shell.recv(65000)
             print(output.decode('ascii'))
 
-            send(ssh, "enable")
-            send(ssh, "vdcvdc\n")
+            send(shell, "enable")
+            send(shell, "vdcvdc\n")
 
         except paramiko.AuthenticationException:
             print("Mot de passe incorrect : ")
     except:
         print("Quelque chose ne vas pas")
-    mainMenu(ssh)
+    mainMenu(shell)
 
-def mainMenu(ssh):
+def mainMenu(shell):
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
@@ -74,18 +74,19 @@ def mainMenu(ssh):
             print("Choisissez un chiffre entre 1 et 3")
 
     if menu_choice == 1:
-        showConf(ssh)
+        showConf(shell)
     elif menu_choice == 2:
-        confMain(ssh)
+        confMain(shell)
     elif menu_choice == 3:
-        connTest(ssh)
+        connTest(shell)
     elif menu_choice == 4:
-        saveLoad(ssh)
+        saveLoad(shell)
     elif menu_choice == 0:
-        exit(ssh)
+        exit(shell)
 
-def showConf(ssh):
+def showConf(shell):
 # Fonction permettant d'afficher le menu et qui prend en paramètres
+
     menu_choice =-1
     while 0 > menu_choice < 4:
         try:
@@ -113,19 +114,19 @@ def showConf(ssh):
 
         if menu_choice == 1:
             time.sleep(2)
-            send(ssh, "sh run")
+            send(shell, "sh run")
             time.sleep(2)
         elif menu_choice == 2:
-            send(ssh, "sh ip int brief")
+            send(shell, "sh ip int brief")
         elif menu_choice == 3:
-            send(ssh, "sh ip access-list")
+            send(shell, "sh ip access-list")
         elif menu_choice == 4:
-            send(ssh, "show ip route")
+            send(shell, "show ip route")
         elif menu_choice == 0:
-            mainMenu(ssh)
-        showConf(ssh)
+            mainMenu(shell)
+        showConf(shell)
 
-def confMain(ssh):
+def confMain(shell):
     menu_choice = -1
     while 0 > menu_choice or 3 < menu_choice:
         try:
@@ -150,60 +151,60 @@ def confMain(ssh):
             print("Choisissez un chiffre entre 1 et 3")
 
     if menu_choice == 1:
-        intConf(ssh)
+        intConf(shell)
     elif menu_choice == 2:
-        routeConf(ssh)
+        routeConf(shell)
     elif menu_choice == 3:
-        setHostname(ssh)
+        setHostname(shell)
     elif menu_choice == 0:
-        mainMenu(ssh)
+        mainMenu(shell)
 
-def intConf(ssh):
+def intConf(shell):
     print("\n CONFIUGRATION DES INTERFACES\n")
     print("------------------------------------\n")
 
-    send(ssh, 'sh ip int brief')
+    send(shell, 'sh ip int brief')
     interface = input("Choisissez une interface à configurer [q pour quitter] : \n")
     if interface == 'q':
-        confMain(ssh)
+        confMain(shell)
     else:
         ip_address = input("Addresse IP ? : ")
         mask = input("Masque de sous-réseau : ")
-        send(ssh, 'conf terminal')
-        send(ssh, 'int ' + interface)
-        send(ssh, 'ip add ' + ip_address + " " + mask)
-        send(ssh, 'no shut')
-        send(ssh, 'end')
+        send(shell, 'conf terminal')
+        send(shell, 'int ' + interface)
+        send(shell, 'ip add ' + ip_address + " " + mask)
+        send(shell, 'no shut')
+        send(shell, 'end')
 
-    intConf(ssh)
+    intConf(shell)
 
-def routeConf(ssh):
+def routeConf(shell):
     print("\n CONFIUGRATION DES ROUTES\n")
     print("------------------------------------\n")
 
-    send(ssh, 'sh ip route')
+    send(shell, 'sh ip route')
     route = input("Adresse à atteindre [q pour quitter] :  ")
     if route == "q":
-        confMain(ssh)
+        confMain(shell)
     else:
         wildcard = input("Masque inversé : ")
         next = input("Interface ou adresse de prochain saut : ")
-        send(ssh, "conf t")
-        send(ssh, "ip route " + route + " " + wildcard + " " + next)
-        send(ssh, 'end')
-    routeConf(ssh)
+        send(shell, "conf t")
+        send(shell, "ip route " + route + " " + wildcard + " " + next)
+        send(shell, 'end')
+    routeConf(shell)
 
-def setHostname(ssh):
+def setHostname(shell):
     print("\n CONFIUGRATION HOSTNAME \n")
     print("-----------------------------\n")
 
     hostname = input("Entrez un Hostname : ")
-    send(ssh, 'conf t')
-    send(ssh, 'hostname ' + hostname)
-    send(ssh, 'end')
-    confMain(ssh)
+    send(shell, 'conf t')
+    send(shell, 'hostname ' + hostname)
+    send(shell, 'end')
+    confMain(shell)
 
-def connTest(ssh):
+def connTest(shell):
     menu_choice = -1
     while 0 > menu_choice or 2 < menu_choice:
         try:
@@ -228,35 +229,35 @@ def connTest(ssh):
             print("Choisissez un chiffre entre 1 et 2")
 
     if menu_choice == 1:
-        traceTest(ssh)
+        traceTest(shell)
     elif menu_choice == 2:
-        pingTest(ssh)
+        pingTest(shell)
     elif menu_choice == 0:
-        mainMenu(ssh)
+        mainMenu(shell)
 
-def traceTest(ssh):
+def traceTest(shell):
     print("\nTRACEROUTE\n")
     print("--------------")
 
     trace = input("Entrez une addresse que vous souhaitez tracer : ")
-    send(ssh, "traceroute " + trace)
+    send(shell, "traceroute " + trace)
 
 
-    connTest(ssh)
+    connTest(shell)
 
-def pingTest(ssh):
+def pingTest(shell):
     print("\nTEST DE PING\n")
     print("----------------------")
 
     ping = input("Entrez une adresse que vous souhaitez pinguer : [q pour quitter")
     if ping == 'q':
-        connTest(ssh)
+        connTest(shell)
     else:
-        send(ssh, "ping " + ping)
+        send(shell, "ping " + ping)
 
-        connTest(ssh)
+        connTest(shell)
 
-def saveLoad(ssh):
+def saveLoad(shell):
     print("\nSAUVEGARDER / CHARGER\n")
     print("----------------------")
 
@@ -287,22 +288,22 @@ def saveLoad(ssh):
             print("Choisissez un chiffre entre 1 et 4")
 
     if menu_choice == 1:
-        send(ssh, "wr")
+        send(shell, "wr")
         time.sleep(2)
-        saveLoad(ssh)
+        saveLoad(shell)
     elif menu_choice == 2:
         tftp = input("Entrez l'adresse de votre serveur TFTP :")
         #file_name = input("Entrez un nom pour votre sauvegarde :")
-        send(ssh, "copy running-config tftp" + tftp)
+        send(shell, "copy running-config tftp" + tftp)
         time.sleep(2)
-        saveLoad(ssh)
+        saveLoad(shell)
     elif menu_choice == 3:
-        send(ssh, "copy start run")
+        send(shell, "copy start run")
     elif menu_choice == 4:
         file = input("Entre le chemin tftp du fichier specifié :")
-        send(ssh, "copy running-config tftp:" + file)
+        send(shell, "copy running-config tftp:" + file)
     elif menu_choice == 0:
-        mainMenu(ssh)
+        mainMenu(shell)
 
 
 if __name__ == '__main__':
