@@ -1,5 +1,6 @@
 import paramiko
 import time
+import logging
 
 
 def send(shell, command):
@@ -21,6 +22,9 @@ def main():
     Main function that initializes the ssh connection by asking for the targeted ip address,
     user and password
     """
+
+    logging.info('Connexion SSH')
+
     router_ip = input("Entrez l'adresse IP cible : ")
     router_username = input("Entrez le username : ")
     router_password = input("Entrez le mot de passe : ")
@@ -48,8 +52,10 @@ def main():
 
         except paramiko.AuthenticationException:
             print("Mot de passe incorrect : ")
+            logging.error("Mauvais identifiant")
     except:
         print("Quelque chose ne vas pas")
+        logging.error("Problème de connexion")
     mainMenu(shell)
 
 
@@ -57,6 +63,8 @@ def mainMenu(shell):
     """
     Main menu to access several sub-menus
     """
+
+    logging.info('Menu principal')
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
@@ -99,6 +107,9 @@ def showConf(shell):
     """
     Multiple choice configuration overview menu
     """
+
+    logging.info('Menu aperçu de configuration')
+
 
     menu_choice = -1
     while 0 > menu_choice < 4:
@@ -145,6 +156,8 @@ def confMain(shell):
     Multiple choice setup menu
     """
 
+    logging.info('Menu de configuration')
+
     menu_choice = -1
     while 0 > menu_choice or 3 < menu_choice:
         try:
@@ -183,6 +196,8 @@ def intConf(shell):
     Configuration menu for the various interfaces
     """
 
+    logging.info('Menu de configuration des interfaces')
+
     print("\n CONFIUGRATION DES INTERFACES\n")
     print("------------------------------------\n")
 
@@ -206,6 +221,9 @@ def routeConf(shell):
     """
     Route configuration menu
     """
+
+    logging.info('Menu de configuration des routes')
+
     print("\n CONFIUGRATION DES ROUTES\n")
     print("------------------------------------\n")
 
@@ -227,6 +245,8 @@ def setHostname(shell):
     Hostname configuration menu
     """
 
+    logging.info('Menu de configuration du hostname')
+
     print("\n CONFIUGRATION HOSTNAME \n")
     print("-----------------------------\n")
 
@@ -241,6 +261,8 @@ def connTest(shell):
     """
     Menu for testing connectivity
     """
+
+    logging.info('Menu test de connectivité')
 
     menu_choice = -1
     while 0 > menu_choice or 2 < menu_choice:
@@ -278,6 +300,9 @@ def traceTest(shell):
     Menu allowing to follow the paths that a data packet
     """
 
+    logging.info('Menu traceroute')
+
+
     print("\nTRACEROUTE\n")
     print("--------------")
 
@@ -291,6 +316,10 @@ def pingTest(shell):
     """
     Menu used to test the accessibility of another machine
     """
+
+    logging.info('Menu test de ping')
+
+
     print("\nTEST DE PING\n")
     print("----------------------")
 
@@ -307,6 +336,8 @@ def saveLoad(shell):
     """
     Menu used to save or load a configuration
     """
+
+    logging.info('Menu sauvegarde / charger configuration')
 
     print("\nSAUVEGARDER / CHARGER\n")
     print("----------------------")
