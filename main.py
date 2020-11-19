@@ -1,9 +1,11 @@
-
 import paramiko
 import time
 
 
 def send(shell, command):
+    """
+    Function to send specific commands
+    """
 
     shell.send("\n")
     shell.send(str(command) + "\n")
@@ -13,8 +15,12 @@ def send(shell, command):
     output = shell.recv(65000)
     print(output.decode('ascii'))
 
-def main():
 
+def main():
+    """
+    Main function that initializes the ssh connection by asking for the targeted ip address,
+    user and password
+    """
     router_ip = input("Entrez l'adresse IP cible : ")
     router_username = input("Entrez le username : ")
     router_password = input("Entrez le mot de passe : ")
@@ -29,9 +35,9 @@ def main():
 
             # Connect to router using username/password authentication.
             ssh_pre.connect(router_ip,
-                        username=router_username,
-                        password=router_password,
-                        look_for_keys=False)
+                            username=router_username,
+                            password=router_password,
+                            look_for_keys=False)
             print("Connexion réussie")
             shell = ssh_pre.invoke_shell()
             output = shell.recv(65000)
@@ -46,7 +52,11 @@ def main():
         print("Quelque chose ne vas pas")
     mainMenu(shell)
 
+
 def mainMenu(shell):
+    """
+    Main menu to access several sub-menus
+    """
 
     menu_choice = -1
     while 0 > menu_choice or 4 < menu_choice:
@@ -63,7 +73,7 @@ def mainMenu(shell):
                 -----------------------------
                 3 - TEST DE CONNEXION
                 -----------------------------
-                 4 - SAUVEGARDER / CHARGER
+                4 - SAUVEGARDER / CHARGER
                 -----------------------------
                 0 - Quitter               
                 -----------------------------
@@ -84,10 +94,13 @@ def mainMenu(shell):
     elif menu_choice == 0:
         exit(shell)
 
-def showConf(shell):
-# Fonction permettant d'afficher le menu et qui prend en paramètres
 
-    menu_choice =-1
+def showConf(shell):
+    """
+    Multiple choice configuration overview menu
+    """
+
+    menu_choice = -1
     while 0 > menu_choice < 4:
         try:
             print("\n MENU APERCU CONFIGURATION\n")
@@ -126,7 +139,12 @@ def showConf(shell):
             mainMenu(shell)
         showConf(shell)
 
+
 def confMain(shell):
+    """
+    Multiple choice setup menu
+    """
+
     menu_choice = -1
     while 0 > menu_choice or 3 < menu_choice:
         try:
@@ -159,7 +177,12 @@ def confMain(shell):
     elif menu_choice == 0:
         mainMenu(shell)
 
+
 def intConf(shell):
+    """
+    Configuration menu for the various interfaces
+    """
+
     print("\n CONFIUGRATION DES INTERFACES\n")
     print("------------------------------------\n")
 
@@ -178,7 +201,11 @@ def intConf(shell):
 
     intConf(shell)
 
+
 def routeConf(shell):
+    """
+    Route configuration menu
+    """
     print("\n CONFIUGRATION DES ROUTES\n")
     print("------------------------------------\n")
 
@@ -194,7 +221,12 @@ def routeConf(shell):
         send(shell, 'end')
     routeConf(shell)
 
+
 def setHostname(shell):
+    """
+    Hostname configuration menu
+    """
+
     print("\n CONFIUGRATION HOSTNAME \n")
     print("-----------------------------\n")
 
@@ -204,7 +236,12 @@ def setHostname(shell):
     send(shell, 'end')
     confMain(shell)
 
+
 def connTest(shell):
+    """
+    Menu for testing connectivity
+    """
+
     menu_choice = -1
     while 0 > menu_choice or 2 < menu_choice:
         try:
@@ -235,17 +272,25 @@ def connTest(shell):
     elif menu_choice == 0:
         mainMenu(shell)
 
+
 def traceTest(shell):
+    """
+    Menu allowing to follow the paths that a data packet
+    """
+
     print("\nTRACEROUTE\n")
     print("--------------")
 
     trace = input("Entrez une addresse que vous souhaitez tracer : ")
     send(shell, "traceroute " + trace)
 
-
     connTest(shell)
 
+
 def pingTest(shell):
+    """
+    Menu used to test the accessibility of another machine
+    """
     print("\nTEST DE PING\n")
     print("----------------------")
 
@@ -257,7 +302,12 @@ def pingTest(shell):
 
         connTest(shell)
 
+
 def saveLoad(shell):
+    """
+    Menu used to save or load a configuration
+    """
+
     print("\nSAUVEGARDER / CHARGER\n")
     print("----------------------")
 
@@ -293,7 +343,7 @@ def saveLoad(shell):
         saveLoad(shell)
     elif menu_choice == 2:
         tftp = input("Entrez l'adresse de votre serveur TFTP :")
-        #file_name = input("Entrez un nom pour votre sauvegarde :")
+        # file_name = input("Entrez un nom pour votre sauvegarde :")
         send(shell, "copy running-config tftp" + tftp)
         time.sleep(2)
         saveLoad(shell)
