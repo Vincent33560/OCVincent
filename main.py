@@ -52,7 +52,7 @@ def main():
 
         except paramiko.AuthenticationException:
             print("Mot de passe incorrect : ")
-            logging.error("Mauvais identifiant")
+            logging.error("Mauvais identifiant !")
     except:
         print("Quelque chose ne vas pas")
         logging.error("Problème de connexion")
