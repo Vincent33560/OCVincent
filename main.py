@@ -1,4 +1,8 @@
-# Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+__authors__ = ("Vincent Da Costa")
+__contact__ = ("vincent.dacosta33@outlook.fr")
+__version__ = "1.0.0"
+__license__ = "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)"
+__date__ = "24/11/2020"
 
 import paramiko
 import time
