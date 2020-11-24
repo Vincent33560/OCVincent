@@ -15,6 +15,7 @@ et suivez simplement les instructions affichées.
 Vous devrez aussi modifier dans le script à la ligne 51 le mot de passe de votre
 utilisateur du router cisco.
 
+
 EN :
 
 This script works on CISCO routers via ios, it requires the creation of a
