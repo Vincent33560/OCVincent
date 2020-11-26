@@ -37,7 +37,7 @@ def mainMenu(shell):
             menu_choice = int(input())
         except ValueError:
             print("Choisissez un chiffre entre 1 et 3")
-
+            logging.error('Mauvais choix de numéro')
     if menu_choice == 1:
         showConf(shell)
     elif menu_choice == 2:
@@ -48,6 +48,7 @@ def mainMenu(shell):
         saveLoad(shell)
     elif menu_choice == 0:
         exit(shell)
+        logging.info('Sortie sans erreur')
 
 
 def showConf(shell):
