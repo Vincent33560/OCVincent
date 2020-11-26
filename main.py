@@ -4,9 +4,6 @@ __version__ = "1.0.0"
 __license__ = "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)"
 __date__ = "24/11/2020"
 
-import paramiko
-import time
-import logging
 from utils import *
 
 def mainMenu(shell):
