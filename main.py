@@ -37,7 +37,7 @@ def mainMenu(shell):
             menu_choice = int(input())
         except ValueError:
             print("Choisissez un chiffre entre 1 et 3")
-            logging.error('Mauvais choix de numéro')
+            logging.error('Mauvais choix de numero')
     if menu_choice == 1:
         showConf(shell)
     elif menu_choice == 2:
@@ -56,7 +56,7 @@ def showConf(shell):
     Multiple choice configuration overview menu
     """
 
-    logging.info('Menu aperçu de configuration')
+    logging.info("Menu apercu de configuration")
 
 
     menu_choice = -1
@@ -150,12 +150,12 @@ def intConf(shell):
     print("------------------------------------\n")
 
     send(shell, 'sh ip int brief')
-    interface = input("Choisissez une interface à configurer [q pour quitter] : \n")
+    interface = input("Choisissez une interface a configurer [q pour quitter] : \n")
     if interface == 'q':
         confMain(shell)
     else:
         ip_address = input("Addresse IP ? : ")
-        mask = input("Masque de sous-réseau : ")
+        mask = input("Masque de sous-reseau : ")
         send(shell, 'conf terminal')
         send(shell, 'int ' + interface)
         send(shell, 'ip add ' + ip_address + " " + mask)
@@ -176,11 +176,11 @@ def routeConf(shell):
     print("------------------------------------\n")
 
     send(shell, 'sh ip route')
-    route = input("Adresse à atteindre [q pour quitter] :  ")
+    route = input("Adresse a atteindre [q pour quitter] :  ")
     if route == "q":
         confMain(shell)
     else:
-        wildcard = input("Masque inversé : ")
+        wildcard = input("Masque inverse : ")
         next = input("Interface ou adresse de prochain saut : ")
         send(shell, "conf t")
         send(shell, "ip route " + route + " " + wildcard + " " + next)
@@ -210,7 +210,7 @@ def connTest(shell):
     Menu for testing connectivity
     """
 
-    logging.info('Menu test de connectivité')
+    logging.info('Menu test de connectivite')
 
     menu_choice = -1
     while 0 > menu_choice or 2 < menu_choice:
@@ -329,7 +329,7 @@ def saveLoad(shell):
     elif menu_choice == 3:
         send(shell, "copy start run")
     elif menu_choice == 4:
-        file = input("Entre le chemin tftp du fichier specifié :")
+        file = input("Entre le chemin tftp du fichier specifie :")
         send(shell, "copy running-config tftp:" + file)
     elif menu_choice == 0:
         mainMenu(shell)
