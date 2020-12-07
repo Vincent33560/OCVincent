@@ -43,7 +43,7 @@ def getSSHConnection():
                             username=router_username,
                             password=router_password,
                             look_for_keys=False)
-            print("Connexion réussie")
+            print("Connexion reussie")
             shell = ssh_pre.invoke_shell()
             output = shell.recv(65000)
             print(output.decode('ascii'))
@@ -56,6 +56,6 @@ def getSSHConnection():
             logging.error("Mauvais identifiant !")
     except:
         print("Quelque chose ne vas pas")
-        logging.error("Problème de connexion")
+        logging.error("Probleme de connexion")
     return(shell)
 
