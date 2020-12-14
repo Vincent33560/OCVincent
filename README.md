@@ -1,3 +1,9 @@
+__authors__ = ("Vincent Da Costa")
+
+__contact__ = ("vincent.dacosta33@outlook.fr")
+
+__version__ = "1.0.0"
+
 # Projet 6 OPENCLASSROOMS
 ## Participez à la vie de la communauté Open Source
 
