@@ -10,7 +10,6 @@ def mainMenu(shell):
     """
     Main menu to access several sub-menus
     """
-
     logging.info('Menu principal')
 
     menu_choice = -1

@@ -19,7 +19,6 @@ Installer le pip de python avec la commande ```apt install python-pip``` pour po
 avec la commande ```pip3 install paramiko```
  Vous pouvez maintenant lancer le script avec la commande ```python3 main.py```, suivez simplement les instructions affichées dans le prompt.
 
-
 ## Usage
 
 Vous devrez aussi modifier dans le fichier utils.py à la ligne 52 le mot de passe de votre
