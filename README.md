@@ -10,8 +10,14 @@ __version__ = "1.0.0"
 Ce script fonctionne sur les routeurs CISCO via ios, il nécéssite la création d'un utilisateur et d'un mot de passe au préalable afin de pouvoir établir la connexion SSH.
 
 ## Installation
-Lancez le script depuis un machine connectée au même réseau que le routeur.
-Sur une machine linux vous devrez installer python avec la commande ```sudo apt-get install python3``` ensuite vous devrez lancer le script avec la commande ```python3 main.py```, suivez simplement les instructions affichées dans le prompt.
+Exemple de création de l'accès SSH sur le routeur :
+https://reussirsonccna.fr/configuration-du-ssh-sur-ios/
+
+Préparez vous à lancer le script depuis un machine connectée au même réseau que le routeur.
+Sur une machine linux vous devrez installer python avec la commande ```apt-get install python3```.
+Installer le pip de python avec la commande ```apt install python-pip``` pour pouvoir installer ensuite le module paramiko 
+avec la commande ```pip3 install paramiko```
+ Vous pouvez maintenant lancer le script avec la commande ```python3 main.py```, suivez simplement les instructions affichées dans le prompt.
 
 
 ## Usage
@@ -27,3 +33,5 @@ send(shell, "vdcvdc\n")
 
 ## License
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.fr)
+
+
