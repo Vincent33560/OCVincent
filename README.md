@@ -4,8 +4,6 @@ __contact__ = ("vincent.dacosta33@outlook.fr")
 
 __version__ = "1.0.0"
 
-# Projet 6 OPENCLASSROOMS
-## Participez à la vie de la communauté Open Source
 
 Ce script fonctionne sur les routeurs CISCO via ios, il nécéssite la création d'un utilisateur et d'un mot de passe au préalable afin de pouvoir établir la connexion SSH.
 
